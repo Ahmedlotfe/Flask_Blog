@@ -176,7 +176,7 @@ def send_reset_email(user):
     msg = Message('Password Reset Request', recipients=[user.email], sender='noreply@codejana.com')
     msg.body = f''' To reset yout password please follow the link below.
     
-    {url_for('reset_token', token=token)}
+    {url_for('reset_token', token=token, _external=True)}
 
     if you didn't send a password reset request. please ignore this message.
 
