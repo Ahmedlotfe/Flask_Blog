@@ -12,15 +12,19 @@ from flask_mail import Message
 
 @app.route('/')
 @app.route('/home')
+@login_required
 def home_page():
     page = request.args.get('page', 1, type=int)
     posts = Post.query.order_by(Post.date_posted.desc()).paginate(per_page = 5, page=page)
-    return render_template('home.html', posts=posts)
+    image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
+    return render_template('home.html', posts=posts, image_file=image_file)
 
 
 @app.route('/about')
+@login_required
 def about_page():
-    return render_template('about.html', title='About')
+    image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
+    return render_template('about.html', title='About', image_file=image_file)
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -66,7 +70,7 @@ def login_page():
 @app.route('/logout')
 def logout_page():
     logout_user()
-    return redirect(url_for('home_page'))
+    return redirect(url_for('login_page'))
 
 
 def save_picture(form_picture):
@@ -121,9 +125,11 @@ def new_post():
 
 
 @app.route('/post/<int:post_id>')
+@login_required
 def post(post_id):
     post = Post.query.get_or_404(post_id)
-    return render_template('post.html', title=post.title, post=post)
+    image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
+    return render_template('post.html', title=post.title, post=post, image_file=image_file)
 
 
 @app.route('/post/<int:post_id>/update', methods=['GET', 'POST'])
@@ -142,7 +148,8 @@ def update_post(post_id):
     elif request.method == 'GET':
         form.title.data = post.title
         form.content.data = post.content
-    return render_template('create_post.html', title='Update Post', form=form, legend='Update Post')
+    image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
+    return render_template('create_post.html', title='Update Post', form=form, legend='Update Post', image_file=image_file)
 
 
 
@@ -167,7 +174,8 @@ def user_posts(username):
     posts = Post.query.filter_by(author=user)\
         .order_by(Post.date_posted.desc())\
         .paginate(per_page = 5, page=page)
-    return render_template('user_posts.html', posts=posts, user=user)
+    image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
+    return render_template('user_posts.html', posts=posts, user=user, image_file=image_file)
 
 
 
