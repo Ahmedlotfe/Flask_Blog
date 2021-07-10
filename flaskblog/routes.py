@@ -121,7 +121,8 @@ def new_post():
         db.session.commit()
         flash('Your Post has been created!', category='success')
         return redirect(url_for('home_page'))
-    return render_template('create_post.html', title='New Post', form=form, legend='New Post')
+    image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
+    return render_template('create_post.html', title='New Post', form=form, legend='New Post', image_file=image_file)
 
 
 @app.route('/post/<int:post_id>')
