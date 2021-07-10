@@ -22,19 +22,19 @@
                </button>
                <div class="collapse navbar-collapse" id="navbarToggle">
                   <div class="navbar-nav mr-auto">
-                     <a class="nav-item nav-link" href="{{ url_for('home_page') }}">Home</a>
-                     <a class="nav-item nav-link" href="{{ url_for('about_page') }}">About</a>
+                     <a class="nav-item nav-link" href="{{ url_for('main.home_page') }}">Home</a>
+                     <a class="nav-item nav-link" href="{{ url_for('main.about_page') }}">About</a>
                   </div>
                   <!-- Navbar Right Side -->
                   <div class="navbar-nav">
                      {% if current_user.is_authenticated %}
                         <img class="rounded-circle" style="width: 40px; height:40px;" src="{{ image_file }}">
-                        <a class="nav-item nav-link" href="{{ url_for('account_page') }}">Account</a>
-                        <a class="nav-item nav-link" href="{{ url_for('new_post') }}">New Post</a>
-                        <a class="nav-item nav-link" href="{{ url_for('logout_page') }}">Logout</a>
+                        <a class="nav-item nav-link" href="{{ url_for('users.account_page') }}">Account</a>
+                        <a class="nav-item nav-link" href="{{ url_for('posts.new_post') }}">New Post</a>
+                        <a class="nav-item nav-link" href="{{ url_for('users.logout_page') }}">Logout</a>
                      {% else %}
-                        <a class="nav-item nav-link" href="{{ url_for('login_page') }}">Login</a>
-                        <a class="nav-item nav-link" href="{{ url_for('register_page') }}">Register</a>
+                        <a class="nav-item nav-link" href="{{ url_for('users.login_page') }}">Login</a>
+                        <a class="nav-item nav-link" href="{{ url_for('users.register_page') }}">Register</a>
                      {% endif %}
                   </div>
                </div>
